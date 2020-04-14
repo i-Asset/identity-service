@@ -284,8 +284,8 @@
         </dependency>
         <!-- Solr data model-->
         <dependency>
-            <groupId>eu.nimble.core.common</groupId>
-            <artifactId>solr-data-model</artifactId>
+            <groupId>at.srfg.iot.iasset</groupId>
+            <artifactId>indexing-data-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
