@@ -8,7 +8,7 @@ node('nimble-jenkins-slave') {
     if (env.BRANCH_NAME == 'staging') {
 
         stage('Clone and Update') {
-            git(url: 'https://github.com/nimble-platform/identity-service.git', branch: env.BRANCH_NAME)
+            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
             sh 'git submodule init'
             sh 'git submodule update'
         }
@@ -26,11 +26,11 @@ node('nimble-jenkins-slave') {
         }
 
         stage('Push Docker') {
-            sh 'docker push nimbleplatform/identity-service:staging'
+            sh 'docker push iassetplatform/identity-service:staging'
         }
 
         stage('Deploy') {
-            sh 'ssh staging "cd /srv/nimble-staging/ && ./run-staging.sh restart-single identity-service"'
+            sh 'ssh staging "cd /srv/docker-setup/staging/ && ./run-staging.sh restart-single identity-service"'
         }
     }
 
@@ -40,7 +40,7 @@ node('nimble-jenkins-slave') {
     if (env.BRANCH_NAME == 'staging-v2') {
 
         stage('Clone and Update') {
-            git(url: 'https://github.com/nimble-platform/identity-service.git', branch: env.BRANCH_NAME)
+            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
             sh 'git submodule init'
             sh 'git submodule update'
         }
@@ -57,7 +57,7 @@ node('nimble-jenkins-slave') {
         }
 
         stage('Push Docker') {
-            sh 'docker push nimbleplatform/identity-service:staging-v2'
+            sh 'docker push iassetplatform/identity-service:staging-v2'
         }
 
         stage('Deploy') {
@@ -71,7 +71,7 @@ node('nimble-jenkins-slave') {
     if (env.BRANCH_NAME == 'master') {
 
         stage('Clone and Update') {
-            git(url: 'https://github.com/nimble-platform/identity-service.git', branch: env.BRANCH_NAME)
+            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
             sh 'git submodule init'
             sh 'git submodule update'
         }
@@ -90,7 +90,7 @@ node('nimble-jenkins-slave') {
     if( env.TAG_NAME ==~ /^\d+.\d+.\d+$/) {
 
         stage('Clone and Update') {
-            git(url: 'https://github.com/nimble-platform/identity-service.git', branch: 'master')
+            git(url: 'https://github.com/i-Asset/identity-service.git', branch: 'master')
             sh 'git submodule init'
             sh 'git submodule update'
         }
@@ -112,8 +112,8 @@ node('nimble-jenkins-slave') {
         }
 
         stage('Push Docker') {
-            sh 'docker push nimbleplatform/identity-service:' + env.TAG_NAME
-            sh 'docker push nimbleplatform/identity-service:latest'
+            sh 'docker push iassetplatform/identity-service:' + env.TAG_NAME
+            sh 'docker push iassetplatform/identity-service:latest'
         }
 
         stage('Deploy MVP') {
