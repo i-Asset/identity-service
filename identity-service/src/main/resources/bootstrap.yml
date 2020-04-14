@@ -92,6 +92,7 @@ nimble:
       password: ${KEYCLOAK_ADMIN_PASSWORD:password}
       cliendId: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
       cliendSecret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+    public-key : ${KEYCLOAK_PUBLIC_KEY}
   oauth:
     client:
       cliendId: ${OAUTH_CLIENT_ID:nimble-client}

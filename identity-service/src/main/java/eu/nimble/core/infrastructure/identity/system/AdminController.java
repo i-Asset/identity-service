@@ -11,7 +11,7 @@ import eu.nimble.core.infrastructure.identity.uaa.OAuthClient;
 import eu.nimble.core.infrastructure.identity.uaa.OpenIdConnectUserDetails;
 import eu.nimble.core.infrastructure.identity.utils.DataModelUtils;
 import eu.nimble.core.infrastructure.identity.utils.LogEvent;
-import eu.nimble.service.model.solr.Search;
+//import eu.nimble.service.model.solr.Search;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType;
 import eu.nimble.utility.LoggerUtils;
 import io.swagger.annotations.Api;
@@ -135,7 +135,7 @@ public class AdminController {
 
             //index party
             PartyType company = partyRepository.findByHjid(companyId).stream().findFirst().orElseThrow(ControllerUtils.CompanyNotFoundException::new);
-            eu.nimble.service.model.solr.party.PartyType newParty = DataModelUtils.toIndexParty(company);
+            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(company);
             indexingClient.setParty(newParty,bearer);
             return ResponseEntity.ok().build();
         }else{
@@ -163,30 +163,30 @@ public class AdminController {
         LoggerUtils.logWithMDC(logger, paramMap, LoggerUtils.LogLevel.INFO, "Deleting company with id {}", companyId);
         boolean isCompanyDeleted = adminService.deleteCompany(companyId,bearer,userId);
         if(isCompanyDeleted){
-                    //find items idexed by the manufaturer
-                    eu.nimble.service.model.solr.Search search = new Search();
-                    search.setQuery("manufacturerId:"+companyId);
-                    eu.nimble.service.model.solr.SearchResult sr = indexingClient.searchItem(search,bearer);
-
-                    List<Object> result  = sr.getResult();
-                    Set<String> catIds = new HashSet<String>();
-                    for(Object ob : result){
-                        LinkedHashMap<String,String> lmap = (LinkedHashMap<String, String>) ob;
-                        String catLineId = lmap.get("uri");
-                        String catalogueId = lmap.get("catalogueId");
-                        if(catalogueId != null){
-                            catIds.add(catalogueId);
-                        }
-                        //remove items from indexing
-                        indexingClient.removeItem(catLineId,bearer);
-                    }
-
-                    Iterator iterate = catIds.iterator();
-
-                    while (iterate.hasNext()){
-                        //remove catalogue from the index
-                        indexingClient.deleteCatalogue(iterate.next().toString(),bearer);
-                    }
+//                    //find items idexed by the manufaturer
+//                    eu.nimble.service.model.solr.Search search = new Search();
+//                    search.setQuery("manufacturerId:"+companyId);
+//                    eu.nimble.service.model.solr.SearchResult sr = indexingClient.searchItem(search,bearer);
+//
+//                    List<Object> result  = sr.getResult();
+//                    Set<String> catIds = new HashSet<String>();
+//                    for(Object ob : result){
+//                        LinkedHashMap<String,String> lmap = (LinkedHashMap<String, String>) ob;
+//                        String catLineId = lmap.get("uri");
+//                        String catalogueId = lmap.get("catalogueId");
+//                        if(catalogueId != null){
+//                            catIds.add(catalogueId);
+//                        }
+//                        //remove items from indexing
+//                        indexingClient.removeItem(catLineId,bearer);
+//                    }
+//
+//                    Iterator iterate = catIds.iterator();
+//
+//                    while (iterate.hasNext()){
+//                        //remove catalogue from the index
+//                        indexingClient.deleteCatalogue(iterate.next().toString(),bearer);
+//                    }
                     //unindex party from the solr
                     indexingClient.deleteParty(String.valueOf(companyId),bearer);
             return ResponseEntity.ok().build();
