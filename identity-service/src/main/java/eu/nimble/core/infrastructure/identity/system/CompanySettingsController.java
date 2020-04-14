@@ -143,12 +143,12 @@ public class CompanySettingsController {
 
         partyRepository.save(existingCompany);
 
-        eu.nimble.service.model.solr.party.PartyType indexedParty =  indexingClient.getParty(existingCompany.getHjid().toString(),bearer);
+        at.srfg.indexing.model.party.PartyType indexedParty =  indexingClient.getParty(existingCompany.getHjid().toString(),bearer);
         //indexing the new company in the indexing service
-        eu.nimble.service.model.solr.party.PartyType party = DataModelUtils.toIndexParty(existingCompany);
-        if (indexedParty != null && indexedParty.getVerified()) {
-            party.setVerified(true);
-        }
+        at.srfg.indexing.model.party.PartyType party = DataModelUtils.toIndexParty(existingCompany);
+//        if (indexedParty != null && indexedParty.getVerified()) {
+//            party.setVerified(true);
+//        }
         indexingClient.setParty(party,bearer);
 
         newSettings = adaptCompanySettings(existingCompany, qualifyingParty);
@@ -196,7 +196,7 @@ public class CompanySettingsController {
         imageDocument.getAttachment().getEmbeddedDocumentBinaryObject().setUri(null); // reset uri (images are handled differently)
 
         //indexing logo image uri for the existing party
-        eu.nimble.service.model.solr.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
+        at.srfg.indexing.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
         indexParty.setLogoId(imageDocument.getID());
         indexingClient.setParty(indexParty,bearer);
 
@@ -262,7 +262,7 @@ public class CompanySettingsController {
         }
 
         //removing logo image id from the indexed the party
-        eu.nimble.service.model.solr.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
+        at.srfg.indexing.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
         indexParty.setLogoId("");
         indexingClient.setParty(indexParty,bearer);
 
@@ -516,13 +516,13 @@ public class CompanySettingsController {
         List<PartyType> unVerifiedCompanies = adminService.queryCompanies(AdminService.CompanyState.UNVERIFIED);
 
         for (PartyType party : verifiedCompanies) {
-            eu.nimble.service.model.solr.party.PartyType newParty = DataModelUtils.toIndexParty(party);
-            newParty.setVerified(true);
+            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
+//            newParty.setVerified(true);
             logger.info("Indexing verified party from database to index : " + newParty.getId() + " legalName : " + newParty.getLegalName());
             indexingClient.setParty(newParty, bearer);
         }
         for (PartyType party : unVerifiedCompanies) {
-            eu.nimble.service.model.solr.party.PartyType newParty = DataModelUtils.toIndexParty(party);
+            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
             logger.info("Indexing unverified party from database to index : " + newParty.getId() + " legalName : " + newParty.getLegalName());
             indexingClient.setParty(newParty, bearer);
         }
