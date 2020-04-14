@@ -9,8 +9,11 @@ node('iasset-jenkins-slave') {
 
         stage('Clone and Update') {
             git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
-            git(url: 'https://github.com/i-Asset/solr-model.git', branch: env.BRANCH_NAME)
-            sh 'cd solr-model && mvn clean install'
+            def exists = fileExists 'solr-model'
+            if (!exists) {
+                sh 'git clone https://github.com/i-Asset/solr-model.git'
+                sh 'cd solr-model && git checkout staging && mvn clean install'
+            }
             sh 'cd ..'
             sh 'git submodule init'
             sh 'git submodule update'
