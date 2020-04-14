@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node('nimble-jenkins-slave') {
+node('iasset-jenkins-slave') {
 
     // -----------------------------------------------
     // --------------- Staging Branch ----------------
