@@ -128,10 +128,10 @@ public class AdminService {
                 String email = companyMember.getContact().getElectronicMail();
                 emailService.notifyVerifiedCompany(email, companyMember, company);
 
-                //indexing the verified status of the company
-                eu.nimble.service.model.solr.party.PartyType party =  indexingClient.getParty(company.getHjid().toString(),bearer);
-                party.setVerified(true);
-                indexingClient.setParty(party,bearer);
+//                //indexing the verified status of the company
+//                eu.nimble.service.model.solr.party.PartyType party =  indexingClient.getParty(company.getHjid().toString(),bearer);
+//                party.setVerified(true);
+//                indexingClient.setParty(party,bearer);
                 return true;
             }
         }
