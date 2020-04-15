@@ -2,7 +2,7 @@ server:
   port: ${PORT:9096}
 spring:
   application:
-    name: identity-service${APPLICATION_NAME_SUFFIX:}
+    name: identity-service
   thymeleaf:
     cache: false
     mode: HTML
