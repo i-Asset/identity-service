@@ -1,7 +1,7 @@
 package eu.nimble.core.infrastructure.identity.system;
 
 import com.auth0.jwt.JWT;
-import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
+//import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
 import eu.nimble.core.infrastructure.identity.clients.IndexingClient;
 import eu.nimble.core.infrastructure.identity.config.FederationConfig;
 import eu.nimble.core.infrastructure.identity.config.NimbleConfigurationProperties;
@@ -72,8 +72,8 @@ public class IdentityController {
     @Autowired
     private PartyRepository partyRepository;
 
-    @Autowired
-    private DelegateServiceClient delegateServiceClient;
+//    @Autowired
+//    private DelegateServiceClient delegateServiceClient;
 
     @Autowired
     private FederationConfig federationConfig;
