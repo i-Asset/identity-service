@@ -2,7 +2,7 @@ server:
   port: ${PORT:9096}
 spring:
   application:
-    name: identity-service${APPLICATION_NAME_SUFFIX:}
+    name: identity-service
   thymeleaf:
     cache: false
     mode: HTML
@@ -12,7 +12,7 @@ spring:
       uri: ${CONFIG_SERVER_URI:http://localhost:8888}
       failFast: ${CONFIG_SERVER_FAILFAST:false}
     discovery:
-      enabled: ${DISCOVERY_ENABLED:false}
+      enabled: ${DISCOVERY_ENABLED:true}
   jpa:
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -126,18 +126,6 @@ nimble:
   federation-instance-id: ${FEDERATION_INSTANCE_ID}
   delegate-service:
     url: ${DELEGATE_SERVICE_URL:}
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 300000
-  threadpool:
-    default:
-      coreSize: 300
-      maxQueueSize: -1
 
 management:
   health:

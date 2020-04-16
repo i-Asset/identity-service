@@ -1,6 +1,6 @@
 package eu.nimble.core.infrastructure.identity.migration;
 
-import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
+//import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
 import eu.nimble.core.infrastructure.identity.config.FederationConfig;
 import eu.nimble.core.infrastructure.identity.repository.PartyRepository;
 import eu.nimble.core.infrastructure.identity.service.IdentityService;
@@ -34,8 +34,8 @@ public class R15MigrationController {
     private PartyRepository partyRepository;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private DelegateServiceClient delegateServiceClient;
+//    @Autowired
+//    private DelegateServiceClient delegateServiceClient;
     @Autowired
     private FederationConfig federationConfig;
 

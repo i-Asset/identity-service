@@ -1,7 +1,7 @@
 package eu.nimble.core.infrastructure.identity.system;
 
 import com.auth0.jwt.JWT;
-import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
+//import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
 import eu.nimble.core.infrastructure.identity.clients.IndexingClient;
 import eu.nimble.core.infrastructure.identity.config.FederationConfig;
 import eu.nimble.core.infrastructure.identity.config.NimbleConfigurationProperties;
@@ -13,13 +13,13 @@ import eu.nimble.core.infrastructure.identity.mail.EmailService;
 import eu.nimble.core.infrastructure.identity.repository.*;
 import eu.nimble.core.infrastructure.identity.service.FederationService;
 import eu.nimble.core.infrastructure.identity.service.IdentityService;
-import eu.nimble.core.infrastructure.identity.service.RocketChatService;
+//import eu.nimble.core.infrastructure.identity.service.RocketChatService;
 import eu.nimble.core.infrastructure.identity.system.dto.CompanyRegistrationResponse;
 import eu.nimble.core.infrastructure.identity.system.dto.UserRegistration;
 import eu.nimble.core.infrastructure.identity.system.dto.federation.FederationResponse;
 import eu.nimble.core.infrastructure.identity.system.dto.oauth.Token;
-import eu.nimble.core.infrastructure.identity.system.dto.rocketchat.login.RocketChatLoginResponse;
-import eu.nimble.core.infrastructure.identity.system.dto.rocketchat.sso.RocketChatResponse;
+//import eu.nimble.core.infrastructure.identity.system.dto.rocketchat.login.RocketChatLoginResponse;
+//import eu.nimble.core.infrastructure.identity.system.dto.rocketchat.sso.RocketChatResponse;
 import eu.nimble.core.infrastructure.identity.uaa.KeycloakAdmin;
 import eu.nimble.core.infrastructure.identity.uaa.OAuthClient;
 import eu.nimble.core.infrastructure.identity.uaa.OpenIdConnectUserDetails;
@@ -72,8 +72,8 @@ public class IdentityController {
     @Autowired
     private PartyRepository partyRepository;
 
-    @Autowired
-    private DelegateServiceClient delegateServiceClient;
+//    @Autowired
+//    private DelegateServiceClient delegateServiceClient;
 
     @Autowired
     private FederationConfig federationConfig;
@@ -111,8 +111,8 @@ public class IdentityController {
     @Autowired
     private UblUtils ublUtils;
 
-    @Autowired
-    private RocketChatService chatService;
+//    @Autowired
+//    private RocketChatService chatService;
 
     @Autowired
     private FederationService federationService;
@@ -362,10 +362,10 @@ public class IdentityController {
                     newUser.getID(), companyName, companyId);
         }
 
-        // Create a user in rocket isChatEnabled
-        if (isChatEnabled) {
-            chatService.registerUser(frontEndUser, credentials, false, 0);
-        }
+//        // Create a user in rocket isChatEnabled
+//        if (isChatEnabled) {
+//            chatService.registerUser(frontEndUser, credentials, false, 0);
+//        }
         logger.info("Registering a new user with email {} and id {}", frontEndUser.getEmail(), frontEndUser.getUserID());
 
         return new ResponseEntity<>(frontEndUser, HttpStatus.OK);
@@ -492,17 +492,17 @@ public class IdentityController {
         return new ResponseEntity<>(companyRegistration, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "", notes = "Login controller for rocket isChatEnabled.", response = CompanyRegistrationResponse.class, tags = {})
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful login", response = FrontEndUser.class),
-            @ApiResponse(code = 401, message = "Unauthorized access", response = FrontEndUser.class)})
-    @RequestMapping(value = "/sso", produces = {"application/json"}, method = RequestMethod.POST)
-    ResponseEntity sso(@CookieValue(value = "rocket_chat_token") String rocketChatToken) {
-        logger.info("Rocket isChatEnabled sso endpoint has been reached and the cookie value is : " + rocketChatToken);
-        RocketChatResponse rocketChatResponse = new RocketChatResponse();
-        rocketChatResponse.setLoginToken(rocketChatToken);
-        return new ResponseEntity<>(rocketChatResponse, HttpStatus.OK);
-    }
+//    @ApiOperation(value = "", notes = "Login controller for rocket isChatEnabled.", response = CompanyRegistrationResponse.class, tags = {})
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Successful login", response = FrontEndUser.class),
+//            @ApiResponse(code = 401, message = "Unauthorized access", response = FrontEndUser.class)})
+//    @RequestMapping(value = "/sso", produces = {"application/json"}, method = RequestMethod.POST)
+//    ResponseEntity sso(@CookieValue(value = "rocket_chat_token") String rocketChatToken) {
+//        logger.info("Rocket isChatEnabled sso endpoint has been reached and the cookie value is : " + rocketChatToken);
+//        RocketChatResponse rocketChatResponse = new RocketChatResponse();
+//        rocketChatResponse.setLoginToken(rocketChatToken);
+//        return new ResponseEntity<>(rocketChatResponse, HttpStatus.OK);
+//    }
 
     @ApiOperation(value = "", notes = "Login controller with credentials.", response = CompanyRegistrationResponse.class, tags = {})
     @ApiResponses(value = {
@@ -565,12 +565,12 @@ public class IdentityController {
         frontEndUser.setAccessToken(accessToken.getValue());
         httpSession.setAttribute(REFRESH_TOKEN_SESSION_KEY, accessToken.getRefreshToken().getValue());
 
-        if(isChatEnabled){
-            RocketChatLoginResponse rocketChatToken = chatService.loginOrCreateUser(frontEndUser, credentials, true, true);
-            frontEndUser.setRocketChatToken(rocketChatToken.getData().getAuthToken());
-            frontEndUser.setRocketChatUsername(rocketChatToken.getData().getMe().getUsername());
-            frontEndUser.setRocketChatUserID(rocketChatToken.getData().getUserId());
-        }
+//        if(isChatEnabled){
+//            RocketChatLoginResponse rocketChatToken = chatService.loginOrCreateUser(frontEndUser, credentials, true, true);
+//            frontEndUser.setRocketChatToken(rocketChatToken.getData().getAuthToken());
+//            frontEndUser.setRocketChatUsername(rocketChatToken.getData().getMe().getUsername());
+//            frontEndUser.setRocketChatUserID(rocketChatToken.getData().getUserId());
+//        }
 
         Map<String,String> paramMap = new HashMap<String, String>();
         paramMap.put("userId",credentials.getUsername());
