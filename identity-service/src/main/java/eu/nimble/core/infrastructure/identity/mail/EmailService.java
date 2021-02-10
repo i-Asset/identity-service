@@ -54,7 +54,7 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("resetPasswordURL", resetCredentialsURL);
 
-        String subject = "Reset Password to the NIMBLE (" + platformName +  ") platform";
+        String subject = "Reset Password to the i-Asset (" + platformName +  ") platform";
 
         this.send(new String[]{toEmail}, subject, "password-reset", context, new String[]{});
     }
@@ -68,7 +68,7 @@ public class EmailService {
         context.setVariable("invitationUrl", invitationUrl);
         context.setVariable("roles", roles);
 
-        String subject = "Invitation to the NIMBLE (" + platformName +  ") platform";
+        String subject = "Invitation to the i-Asset (" + platformName +  ") platform";
 
         this.send(new String[]{toEmail}, subject, "invitation", context, new String[]{supportEmail});
     }
@@ -80,7 +80,7 @@ public class EmailService {
         context.setVariable("nimbleUrl", frontendUrl);
         context.setVariable("roles", roles);
 
-        String subject = "Invitation to " + companyName + " from Nimble (" + platformName +  ")";
+        String subject = "Invitation to " + companyName + " from i-Asset (" + platformName +  ")";
 
         this.send(new String[]{toEmail}, subject, "invitation_existing_company", context, new String[]{});
     }
@@ -113,7 +113,7 @@ public class EmailService {
             context.setVariable("companypostalCode", address.getPostalZone());
         }
 
-        String subject = "NIMBLE (" + platformName +  ") : New company registered";
+        String subject = "i-Asset (" + platformName +  ") : New company registered";
 
         this.send(emails.toArray(new String[]{}), subject, "new_company", context, new String[]{});
     }
@@ -127,7 +127,7 @@ public class EmailService {
         context.setVariable("supportEmail", supportEmail);
         context.setVariable("nimbleUrl", frontendUrl);
 
-        String subject = "Your company has been verified on NIMBLE (" + platformName +  ")";
+        String subject = "Your company has been verified on i-Asset (" + platformName +  ")";
 
         this.send(new String[]{email}, subject, "company_verified", context, new String[]{});
     }
