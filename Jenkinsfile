@@ -19,9 +19,9 @@ node('iasset-jenkins-slave') {
             sh 'git submodule update'
         }
 
-        stage('Run Tests') {
-            sh 'mvn clean test'
-        }
+        //stage('Run Tests') {
+        //    sh 'mvn clean test'
+        //}
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
@@ -50,9 +50,9 @@ node('iasset-jenkins-slave') {
             sh 'git submodule init'
             sh 'git submodule update'
         }
-        stage('Run Tests') {
-            sh 'mvn clean test'
-        }
+        //stage('Run Tests') {
+        //    sh 'mvn clean test'
+        //}
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
@@ -81,9 +81,9 @@ node('iasset-jenkins-slave') {
             sh 'git submodule init'
             sh 'git submodule update'
         }
-        stage('Run Tests') {
-            sh 'mvn clean test'
-        }
+        //stage('Run Tests') {
+        //    sh 'mvn clean test'
+        //}
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
@@ -105,9 +105,9 @@ node('iasset-jenkins-slave') {
             sh 'mvn -f identity-service/pom.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=' + env.TAG_NAME
         }
 
-        stage('Run Tests') {
-            sh 'mvn clean test'
-        }
+        //stage('Run Tests') {
+        //    sh 'mvn clean test'
+        //}
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
