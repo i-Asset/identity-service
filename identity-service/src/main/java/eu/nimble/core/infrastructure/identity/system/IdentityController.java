@@ -1,6 +1,43 @@
 package eu.nimble.core.infrastructure.identity.system;
 
+import static eu.nimble.core.infrastructure.identity.uaa.OAuthClient.Role.EFACTORY_USER;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.rmi.ServerException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.WebApplicationException;
+
+import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.auth0.jwt.JWT;
+
 //import eu.nimble.core.infrastructure.identity.clients.DelegateServiceClient;
 import eu.nimble.core.infrastructure.identity.clients.IndexingClient;
 import eu.nimble.core.infrastructure.identity.config.FederationConfig;
@@ -8,9 +45,20 @@ import eu.nimble.core.infrastructure.identity.config.NimbleConfigurationProperti
 import eu.nimble.core.infrastructure.identity.constants.GlobalConstants;
 import eu.nimble.core.infrastructure.identity.entity.UaaUser;
 import eu.nimble.core.infrastructure.identity.entity.UserInvitation;
-import eu.nimble.core.infrastructure.identity.entity.dto.*;
+import eu.nimble.core.infrastructure.identity.entity.dto.Address;
+import eu.nimble.core.infrastructure.identity.entity.dto.CompanyRegistration;
+import eu.nimble.core.infrastructure.identity.entity.dto.Credentials;
+import eu.nimble.core.infrastructure.identity.entity.dto.FrontEndUser;
+import eu.nimble.core.infrastructure.identity.entity.dto.ResetCredentials;
+import eu.nimble.core.infrastructure.identity.entity.dto.ResetPassword;
 import eu.nimble.core.infrastructure.identity.mail.EmailService;
-import eu.nimble.core.infrastructure.identity.repository.*;
+import eu.nimble.core.infrastructure.identity.repository.DeliveryTermsRepository;
+import eu.nimble.core.infrastructure.identity.repository.PartyRepository;
+import eu.nimble.core.infrastructure.identity.repository.PaymentMeansRepository;
+import eu.nimble.core.infrastructure.identity.repository.PersonRepository;
+import eu.nimble.core.infrastructure.identity.repository.QualifyingPartyRepository;
+import eu.nimble.core.infrastructure.identity.repository.UaaUserRepository;
+import eu.nimble.core.infrastructure.identity.repository.UserInvitationRepository;
 import eu.nimble.core.infrastructure.identity.service.FederationService;
 import eu.nimble.core.infrastructure.identity.service.IdentityService;
 //import eu.nimble.core.infrastructure.identity.service.RocketChatService;
@@ -27,36 +75,18 @@ import eu.nimble.core.infrastructure.identity.utils.DataModelUtils;
 import eu.nimble.core.infrastructure.identity.utils.LogEvent;
 import eu.nimble.core.infrastructure.identity.utils.UblAdapter;
 import eu.nimble.core.infrastructure.identity.utils.UblUtils;
-import eu.nimble.service.model.ubl.commonaggregatecomponents.*;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.DeliveryTermsType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.PaymentMeansType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.PersonType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.QualifyingPartyType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.TradingPreferences;
 import eu.nimble.service.model.ubl.commonbasiccomponents.TextType;
 import eu.nimble.utility.LoggerUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.keycloak.representations.idm.UserRepresentation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.WebApplicationException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.rmi.ServerException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static eu.nimble.core.infrastructure.identity.uaa.OAuthClient.Role.EFACTORY_USER;
 
 @Controller
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -460,7 +490,7 @@ public class IdentityController {
         }
 
         //indexing the new company in the indexing service
-        at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(newCompany);
+        at.srfg.iot.common.solr.model.model.party.PartyType newParty = DataModelUtils.toIndexParty(newCompany);
         Map<NimbleConfigurationProperties.LanguageID, String> businessKeywords = companyRegistration.getSettings().getDetails().getBusinessKeywords();
         List<TextType> keywordsList = UblAdapter.adaptLanguageMapToTextType(businessKeywords);
         for (TextType keyword : keywordsList) {

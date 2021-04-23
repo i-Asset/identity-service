@@ -1,11 +1,7 @@
 package eu.nimble.core.infrastructure.identity.utils;
 
-import at.srfg.indexing.model.party.PartyType;
+import at.srfg.iot.common.solr.model.model.party.PartyType;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.DocumentReferenceType;
-import eu.nimble.service.model.ubl.commonbasiccomponents.TextType;
-import eu.nimble.service.model.ubl.extension.QualityIndicatorParameter;
-
-import java.util.List;
 
 /**
  * Created by Dileepa Jayakody on 15/03/19
@@ -17,7 +13,7 @@ public class DataModelUtils {
      * UBL data model to Solr model converter
      */
 
-    public static at.srfg.indexing.model.party.PartyType toIndexParty(eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType party) {
+    public static PartyType toIndexParty(eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType party) {
         PartyType indexParty = new PartyType();
         party.getBrandName().forEach(name -> indexParty.addBrandName(name.getLanguageID(), name.getValue()));
         if(party.getPartyName() != null && party.getPartyName().size() > 0){

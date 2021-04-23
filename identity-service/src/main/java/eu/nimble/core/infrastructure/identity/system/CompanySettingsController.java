@@ -143,9 +143,9 @@ public class CompanySettingsController {
 
         partyRepository.save(existingCompany);
 
-        at.srfg.indexing.model.party.PartyType indexedParty =  indexingClient.getParty(existingCompany.getHjid().toString(),bearer);
+        at.srfg.iot.common.solr.model.model.party.PartyType indexedParty =  indexingClient.getParty(existingCompany.getHjid().toString(),bearer);
         //indexing the new company in the indexing service
-        at.srfg.indexing.model.party.PartyType party = DataModelUtils.toIndexParty(existingCompany);
+        at.srfg.iot.common.solr.model.model.party.PartyType party = DataModelUtils.toIndexParty(existingCompany);
 //        if (indexedParty != null && indexedParty.getVerified()) {
 //            party.setVerified(true);
 //        }
@@ -196,7 +196,7 @@ public class CompanySettingsController {
         imageDocument.getAttachment().getEmbeddedDocumentBinaryObject().setUri(null); // reset uri (images are handled differently)
 
         //indexing logo image uri for the existing party
-        at.srfg.indexing.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
+        at.srfg.iot.common.solr.model.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
         indexParty.setLogoId(imageDocument.getID());
         indexingClient.setParty(indexParty,bearer);
 
@@ -262,7 +262,7 @@ public class CompanySettingsController {
         }
 
         //removing logo image id from the indexed the party
-        at.srfg.indexing.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
+        at.srfg.iot.common.solr.model.model.party.PartyType indexParty =  indexingClient.getParty(company.getHjid().toString(),bearer);
         indexParty.setLogoId("");
         indexingClient.setParty(indexParty,bearer);
 
@@ -516,13 +516,13 @@ public class CompanySettingsController {
         List<PartyType> unVerifiedCompanies = adminService.queryCompanies(AdminService.CompanyState.UNVERIFIED);
 
         for (PartyType party : verifiedCompanies) {
-            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
+        	at.srfg.iot.common.solr.model.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
 //            newParty.setVerified(true);
             logger.info("Indexing verified party from database to index : " + newParty.getId() + " legalName : " + newParty.getLegalName());
             indexingClient.setParty(newParty, bearer);
         }
         for (PartyType party : unVerifiedCompanies) {
-            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
+        	at.srfg.iot.common.solr.model.model.party.PartyType newParty = DataModelUtils.toIndexParty(party);
             logger.info("Indexing unverified party from database to index : " + newParty.getId() + " legalName : " + newParty.getLegalName());
             indexingClient.setParty(newParty, bearer);
         }

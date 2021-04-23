@@ -1,4 +1,4 @@
-package eu.nimble.core.infrastructure.identity.controller;
+package eu.nimble.core.infrastructure.identity.system;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;

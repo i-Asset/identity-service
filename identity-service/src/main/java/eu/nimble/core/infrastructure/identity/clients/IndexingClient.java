@@ -1,15 +1,16 @@
 package eu.nimble.core.infrastructure.identity.clients;
 
-import at.srfg.indexing.model.party.PartyType;
-//import eu.nimble.service.model.solr.Search;
-//import eu.nimble.service.model.solr.SearchResult;
-import feign.Headers;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import at.srfg.iot.common.solr.model.model.party.PartyType;
+//import eu.nimble.service.model.solr.Search;
+//import eu.nimble.service.model.solr.SearchResult;
+import feign.Headers;
 
 /**
  * REST Client to index entities via the Indexing Service.

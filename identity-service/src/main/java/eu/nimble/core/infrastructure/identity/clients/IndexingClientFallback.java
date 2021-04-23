@@ -1,7 +1,8 @@
 package eu.nimble.core.infrastructure.identity.clients;
 
-import at.srfg.indexing.model.party.PartyType;
 import org.springframework.stereotype.Component;
+
+import at.srfg.iot.common.solr.model.model.party.PartyType;
 
 /**
  *

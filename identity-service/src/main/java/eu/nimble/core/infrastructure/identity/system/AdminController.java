@@ -135,7 +135,7 @@ public class AdminController {
 
             //index party
             PartyType company = partyRepository.findByHjid(companyId).stream().findFirst().orElseThrow(ControllerUtils.CompanyNotFoundException::new);
-            at.srfg.indexing.model.party.PartyType newParty = DataModelUtils.toIndexParty(company);
+            at.srfg.iot.common.solr.model.model.party.PartyType newParty = DataModelUtils.toIndexParty(company);
             indexingClient.setParty(newParty,bearer);
             return ResponseEntity.ok().build();
         }else{
