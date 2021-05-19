@@ -19,9 +19,14 @@ node('iasset-jenkins-slave') {
             sh 'git submodule update'
         }
 
-        //stage('Run Tests') {
-        //    sh 'mvn clean test'
-        //}
+        stage('Build Dependencies') {
+            sh 'rm -rf common'
+            sh 'git clone https://github.com/i-Asset/common.git'
+            dir('common') {
+                sh 'git checkout ' + env.BRANCH_NAME
+                sh 'mvn clean install -DskipTests'
+            }
+        }
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
@@ -41,37 +46,6 @@ node('iasset-jenkins-slave') {
     }
 
     // -----------------------------------------------
-    // --------------- Staging V2 Branch ----------------
-    // -----------------------------------------------
-    if (env.BRANCH_NAME == 'staging-v2') {
-
-        stage('Clone and Update') {
-            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
-            sh 'git submodule init'
-            sh 'git submodule update'
-        }
-        //stage('Run Tests') {
-        //    sh 'mvn clean test'
-        //}
-
-        stage('Build Java') {
-            sh 'mvn clean install -DskipTests'
-        }
-
-        stage('Build Docker') {
-            sh 'mvn -f identity-service/pom.xml docker:build -DdockerImageTag=staging-v2'
-        }
-
-        stage('Push Docker') {
-            sh 'docker push iassetplatform/identity-service:staging-v2'
-        }
-
-        stage('Deploy') {
-            sh 'ssh staging "cd /srv/nimble-staging/ && ./run-staging.sh restart-single identity-service-v2"'
-        }
-    }
-
-    // -----------------------------------------------
     // ---------------- Master Branch ----------------
     // -----------------------------------------------
     if (env.BRANCH_NAME == 'master') {
@@ -81,9 +55,16 @@ node('iasset-jenkins-slave') {
             sh 'git submodule init'
             sh 'git submodule update'
         }
-        //stage('Run Tests') {
-        //    sh 'mvn clean test'
-        //}
+
+        stage('Build Dependencies') {
+            sh 'rm -rf common'
+            sh 'git clone https://github.com/i-Asset/common.git'
+            dir('common') {
+                sh 'git checkout ' + env.BRANCH_NAME
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
