@@ -1,6 +1,7 @@
 package eu.nimble.core.infrastructure.identity.utils;
 
 import at.srfg.iot.common.solr.model.model.party.PartyType;
+import eu.nimble.service.model.ubl.commonaggregatecomponents.ContactType;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.DocumentReferenceType;
 
 /**
@@ -23,7 +24,13 @@ public class DataModelUtils {
             String originLang = party.getPostalAddress().getCountry().getName().getLanguageID() != null ? party.getPostalAddress().getCountry().getName().getLanguageID() : "";
             indexParty.addOrigin(originLang, party.getPostalAddress().getCountry().getName().getValue());
         }
-
+        // include the name, mail & phone of the main contact person (when set)
+        if (party.getContact()!= null ) {
+        	ContactType contact = party.getContact();
+        	indexParty.setProperty(contact.getName().getValue(), "contact", "name");
+        	indexParty.setProperty(contact.getElectronicMail(), "contact", "email");
+        	indexParty.setProperty(contact.getTelephone(), "contact", "phone");
+        }
         indexParty.setId(party.getHjid().toString());
         indexParty.setUri(party.getHjid().toString());
 
