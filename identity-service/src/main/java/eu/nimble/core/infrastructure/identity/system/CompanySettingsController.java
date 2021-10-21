@@ -1,5 +1,7 @@
 package eu.nimble.core.infrastructure.identity.system;
 
+import at.srfg.iot.common.utility.JsonSerializationUtility;
+import at.srfg.iot.common.utility.persistence.binary.BinaryContentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -20,8 +22,6 @@ import eu.nimble.core.infrastructure.identity.utils.UblUtils;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.*;
 import eu.nimble.service.model.ubl.commonbasiccomponents.BinaryObjectType;
 import eu.nimble.service.model.ubl.commonbasiccomponents.CodeType;
-import eu.nimble.utility.JsonSerializationUtility;
-import eu.nimble.utility.persistence.binary.BinaryContentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,10 +44,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static at.srfg.iot.common.utility.HttpResponseUtil.createResponseEntityAndLog;
 import static eu.nimble.core.infrastructure.identity.uaa.OAuthClient.Role.*;
 import static eu.nimble.core.infrastructure.identity.utils.UblAdapter.*;
 import static eu.nimble.service.model.ubl.extension.QualityIndicatorParameter.*;
-import static eu.nimble.utility.HttpResponseUtil.createResponseEntityAndLog;
 
 /**
  * Created by Johannes Innerbichler on 04/07/17.
