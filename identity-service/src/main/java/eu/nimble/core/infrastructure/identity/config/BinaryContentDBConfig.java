@@ -19,9 +19,9 @@ import javax.sql.DataSource;
 @PropertySource("classpath:bootstrap.yml")
 @EnableJpaRepositories(
         transactionManagerRef = "binarycontentdbTransactionManager",
-        basePackages = {"eu.nimble.utility.persistence.binary"}
+        basePackages = {"at.srfg.iot.common.utility.persistence.binary"}
 )
-@ComponentScan(basePackages = {"eu.nimble.core.infrastructure.identity.config", "eu.nimble.utility.config"})
+@ComponentScan(basePackages = {"eu.nimble.core.infrastructure.identity.config", "at.srfg.iot.common.utility.config"})
 public class BinaryContentDBConfig {
 
     @Autowired

@@ -1,6 +1,6 @@
 package eu.nimble.core.infrastructure.identity.system;
 
-import com.thoughtworks.xstream.core.util.Fields;
+import at.srfg.iot.common.utility.LoggerUtils;
 import eu.nimble.core.infrastructure.identity.clients.CatalogueServiceClient;
 import eu.nimble.core.infrastructure.identity.clients.IndexingClient;
 import eu.nimble.core.infrastructure.identity.constants.GlobalConstants;
@@ -8,15 +8,11 @@ import eu.nimble.core.infrastructure.identity.repository.PartyRepository;
 import eu.nimble.core.infrastructure.identity.service.AdminService;
 import eu.nimble.core.infrastructure.identity.service.IdentityService;
 import eu.nimble.core.infrastructure.identity.uaa.OAuthClient;
-import eu.nimble.core.infrastructure.identity.uaa.OpenIdConnectUserDetails;
 import eu.nimble.core.infrastructure.identity.utils.DataModelUtils;
 import eu.nimble.core.infrastructure.identity.utils.LogEvent;
-//import eu.nimble.service.model.solr.Search;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType;
-import eu.nimble.utility.LoggerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.bouncycastle.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +25,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+//import eu.nimble.service.model.solr.Search;
 
 /**
  * Created by Johannes Innerbichler on 12.09.18.

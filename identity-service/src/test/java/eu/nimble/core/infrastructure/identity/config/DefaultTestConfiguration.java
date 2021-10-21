@@ -6,7 +6,7 @@ import eu.nimble.core.infrastructure.identity.entity.UaaUser;
 import eu.nimble.core.infrastructure.identity.uaa.KeycloakAdmin;
 import eu.nimble.core.infrastructure.identity.uaa.OAuthClient;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType;
-import eu.nimble.utility.persistence.initalizer.CustomDbInitializer;
+import at.srfg.iot.common.utility.persistence.initalizer.CustomDbInitializer;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;

@@ -82,7 +82,7 @@ import eu.nimble.service.model.ubl.commonaggregatecomponents.PersonType;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.QualifyingPartyType;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.TradingPreferences;
 import eu.nimble.service.model.ubl.commonbasiccomponents.TextType;
-import eu.nimble.utility.LoggerUtils;
+import at.srfg.iot.common.utility.LoggerUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

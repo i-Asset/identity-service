@@ -1,6 +1,6 @@
 package eu.nimble.core.infrastructure.identity.utils;
 
-import eu.nimble.utility.persistence.binary.ImageScaler;
+import at.srfg.iot.common.utility.persistence.binary.ImageScaler;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

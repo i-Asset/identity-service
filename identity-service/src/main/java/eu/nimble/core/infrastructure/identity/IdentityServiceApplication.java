@@ -4,9 +4,9 @@ import eu.nimble.core.infrastructure.identity.entity.UaaUser;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.PartyType;
 import eu.nimble.service.model.ubl.commonaggregatecomponents.PersonType;
 import eu.nimble.service.model.ubl.commonbasiccomponents.CodeType;
-import eu.nimble.utility.email.EmailService;
-import eu.nimble.utility.email.ThymeleafConfig;
-import eu.nimble.utility.persistence.binary.BinaryContentService;
+import at.srfg.iot.common.utility.email.EmailService;
+import at.srfg.iot.common.utility.email.ThymeleafConfig;
+import at.srfg.iot.common.utility.persistence.binary.BinaryContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +34,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"eu.nimble.core.infrastructure.identity"})
 @EntityScan(basePackageClasses = {UaaUser.class, PartyType.class, PersonType.class, CodeType.class})
 @EnableCaching
-@ComponentScan(basePackages = {"eu.nimble.utility", "eu.nimble.utility.persistence.initalizer", "eu.nimble.core.infrastructure.identity"},excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = EmailService.class), @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ThymeleafConfig.class)})
+@ComponentScan(basePackages = {"at.srfg.iot.common.utility", "at.srfg.iot.common.utility.persistence.initalizer", "eu.nimble.core.infrastructure.identity"},excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = EmailService.class), @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ThymeleafConfig.class)})
 public class IdentityServiceApplication extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(IdentityServiceApplication.class);
