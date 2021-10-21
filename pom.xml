@@ -17,9 +17,7 @@
     </parent>
 
     <modules>
-        <module>libs/common/data-model/ubl-data-model</module>
-        <module>libs/common/data-model/indexing-data-model</module>
-        <module>libs/common/utility</module>
+        <module>libs/common</module>
         <module>identity-service</module>
     </modules>
 </project>
