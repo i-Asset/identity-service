@@ -9,7 +9,7 @@ node('iasset-jenkins-slave') {
 
         stage('SCM Checkout') {
             checkout([$class: 'GitSCM',
-                branches: [[name: 'env.BRANCH_NAME']],
+                branches: [[name: '${BRANCH_NAME}']],
                 extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
                 userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
             ])
@@ -39,7 +39,7 @@ node('iasset-jenkins-slave') {
 
         stage('SCM Checkout') {
             checkout([$class: 'GitSCM',
-                branches: [[name: 'env.BRANCH_NAME']],
+                branches: [[name: '${BRANCH_NAME}']],
                 extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
                 userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
            ])
@@ -57,7 +57,7 @@ node('iasset-jenkins-slave') {
 
         stage('Clone and Update') {
             checkout([$class: 'GitSCM',
-                branches: [[name: 'env.BRANCH_NAME']],
+                branches: [[name: '${BRANCH_NAME}']],
                 extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
                 userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
             ])
