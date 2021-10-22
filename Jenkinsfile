@@ -7,10 +7,12 @@ node('iasset-jenkins-slave') {
     // -----------------------------------------------
     if (env.BRANCH_NAME == 'staging') {
 
-        stage('Clone and Update') {
-            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
-            sh 'git submodule init'
-            sh 'git submodule update'
+        stage('SCM Checkout') {
+            checkout([$class: 'GitSCM',
+                branches: [[name: 'env.BRANCH_NAME']],
+                extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
+                userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
+            ])
         }
 
         stage('Build Java') {
@@ -35,21 +37,13 @@ node('iasset-jenkins-slave') {
     // -----------------------------------------------
     if (env.BRANCH_NAME == 'master') {
 
-        stage('Clone and Update') {
-            git(url: 'https://github.com/i-Asset/identity-service.git', branch: env.BRANCH_NAME)
-            sh 'git submodule init'
-            sh 'git submodule update'
+        stage('SCM Checkout') {
+            checkout([$class: 'GitSCM',
+                branches: [[name: 'env.BRANCH_NAME']],
+                extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
+                userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
+           ])
         }
-
-        stage('Build Dependencies') {
-            sh 'rm -rf common'
-            sh 'git clone https://github.com/i-Asset/common.git'
-            dir('common') {
-                sh 'git checkout ' + env.BRANCH_NAME
-                sh 'mvn clean install -DskipTests'
-            }
-        }
-
 
         stage('Build Java') {
             sh 'mvn clean install -DskipTests'
@@ -62,9 +56,11 @@ node('iasset-jenkins-slave') {
     if( env.TAG_NAME ==~ /^\d+.\d+.\d+$/) {
 
         stage('Clone and Update') {
-            git(url: 'https://github.com/i-Asset/identity-service.git', branch: 'master')
-            sh 'git submodule init'
-            sh 'git submodule update'
+            checkout([$class: 'GitSCM',
+                branches: [[name: 'env.BRANCH_NAME']],
+                extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true ]],
+                userRemoteConfigs: [[url: 'https://github.com/i-Asset/identity-service.git']]
+            ])
         }
         stage('Set version') {
             sh 'mvn org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=' + env.TAG_NAME
